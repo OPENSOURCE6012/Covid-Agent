@@ -1,0 +1,36 @@
+
+sources:
+  my-bq-source:
+    kind: bigquery
+    project: endless-empire-472415-f4
+
+tools:
+  search_covid_data:
+    kind: bigquery-sql
+    source: my-bq-source
+    statement: |
+      SELECT
+        date,
+        state,
+        positive,
+        death,
+        death_confirmed,
+        death_increase,
+        hospitalized,
+        hospitalized_currently,
+        hospitalized_increase,
+        in_icu_currently,
+        negative,
+        negative_increase,
+        on_ventilator_currently
+      FROM
+        `bigquery-public-data.covid19_tracking.state_testing_and_outcomes`
+      ORDER BY date DESC
+      LIMIT 1000
+    description: |
+      Use this tool to get COVID-19 tracking data including positive cases,
+      deaths, hospitalizations, ICU, ventilator usage and test results by US state.
+
+toolsets:
+  my_bq_toolset:
+    - search_covid_data
